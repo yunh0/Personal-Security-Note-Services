@@ -20,7 +20,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // permit
         http.authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/", "/home","/example").permitAll()
                 // hello 페이지는 USER 롤을 가진 유저에게만 허용
                 .antMatchers("/private").hasRole("USER")
                 .antMatchers("/admin").hasRole("ADMIN")

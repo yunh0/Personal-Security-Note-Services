@@ -18,9 +18,11 @@ public class JwtKey {
     private static final String[] KID_SET = SECRET_KEY_SET.keySet().toArray(new String[0]);
     private static Random randomIndex = new Random();
 
-    public static Pair<String, String> getRandomKey() {
+    public static Pair<String, Key> getRandomKey() {
         String kid = KID_SET[randomIndex.nextInt(KID_SET.length)];
-        return Pair.of(kid, SECRET_KEY_SET.get(kid));
+
+        String secretKey = SECRET_KEY_SET.get(kid);
+        return Pair.of(kid, Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)));
     }
 
     public static Key getKey(String kid) {

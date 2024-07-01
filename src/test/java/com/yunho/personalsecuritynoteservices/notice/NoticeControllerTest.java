@@ -86,7 +86,7 @@ class NoticeControllerTest {
     void deleteNotice_인증없음() throws Exception {
         Notice notice = noticeRepository.save(new Notice("제목", "내용"));
         mockMvc.perform(
-                delete("/notice/" + notice.getId())
+                delete("/notice?id=" + notice.getId())
         ).andExpect(status().is4xxClientError());
     }
 
@@ -95,7 +95,7 @@ class NoticeControllerTest {
     void deleteNotice_유저인증있음() throws Exception {
         Notice notice = noticeRepository.save(new Notice("제목", "내용"));
         mockMvc.perform(
-                delete("/notice/" + notice.getId()).with(csrf())
+                delete("/notice?id=" + notice.getId()).with(csrf())
         ).andExpect(status().is4xxClientError());
     }
 
@@ -104,7 +104,7 @@ class NoticeControllerTest {
     void deleteNotice_어드민인증있음() throws Exception {
         Notice notice = noticeRepository.save(new Notice("제목", "내용"));
         mockMvc.perform(
-                delete("/notice/" + notice.getId()).with(csrf())
-        ).andExpect(status().is4xxClientError());
+                delete("/notice?id=" + notice.getId()).with(csrf())
+        ).andExpect(redirectedUrl("notice")).andExpect(status().is3xxRedirection());
     }
 }

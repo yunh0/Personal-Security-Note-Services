@@ -40,6 +40,8 @@ public class NoteService {
             throw new UserNotFoundException();
         }
         Note note = noteRepository.findByIdAndUser(noteId, user);
-        noteRepository.delete(note);
+        if (note != null) {
+            noteRepository.delete(note);
+        }
     }
 }

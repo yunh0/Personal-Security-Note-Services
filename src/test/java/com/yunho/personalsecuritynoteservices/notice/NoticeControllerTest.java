@@ -6,8 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,6 +39,7 @@ class NoticeControllerTest {
     @Test
     void getNotice_인증없음() throws Exception {
         mockMvc.perform(get("/notice"))
+                .andExpect(redirectedUrlPattern("**/login"))
                 .andExpect(status().is3xxRedirection());
     }
 
@@ -57,7 +57,7 @@ class NoticeControllerTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("title", "제목")
                         .param("content", "내용")
-        ).andExpect(status().is4xxClientError());
+        ).andExpect(status().isForbidden());
     }
 
     @Test
@@ -68,7 +68,7 @@ class NoticeControllerTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("title", "제목")
                         .param("content", "내용")
-        ).andExpect(status().is4xxClientError());
+        ).andExpect(status().isForbidden());
     }
 
     @Test
@@ -87,7 +87,7 @@ class NoticeControllerTest {
         Notice notice = noticeRepository.save(new Notice("제목", "내용"));
         mockMvc.perform(
                 delete("/notice?id=" + notice.getId())
-        ).andExpect(status().is4xxClientError());
+        ).andExpect(status().isForbidden());
     }
 
     @Test
@@ -96,7 +96,7 @@ class NoticeControllerTest {
         Notice notice = noticeRepository.save(new Notice("제목", "내용"));
         mockMvc.perform(
                 delete("/notice?id=" + notice.getId()).with(csrf())
-        ).andExpect(status().is4xxClientError());
+        ).andExpect(status().isForbidden());
     }
 
     @Test

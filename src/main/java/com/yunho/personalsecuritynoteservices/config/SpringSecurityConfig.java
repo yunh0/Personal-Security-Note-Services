@@ -21,13 +21,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // permit
         http.authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
-                .antMatchers("/hello").hasRole("USER")
+                // hello 페이지는 USER 롤을 가진 유저에게만 허용
+                .antMatchers("/private").hasRole("USER")
+                .antMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated();
         // login
-        http.formLogin()
-                .permitAll()
+        http.formLogin() // 기본 로그인 인증 제공
+                .defaultSuccessUrl("/")
+                .permitAll() // 모두 허용
                 .and()
-                .logout();
+                .logout(); // 기본 로그아웃 제공
     }
 
     @Bean
@@ -35,9 +38,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         UserDetails user = User.withUsername("user")
-                .password(encoder.encode("password"))
+                .password(encoder.encode("user"))
                 .roles("USER")
                 .build();
-        return new InMemoryUserDetailsManager(user);
+        // admin 정보
+        UserDetails admin = User.withUsername("admin")
+                .password(encoder.encode("admin"))
+                .roles("ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(user, admin);
     }
 }

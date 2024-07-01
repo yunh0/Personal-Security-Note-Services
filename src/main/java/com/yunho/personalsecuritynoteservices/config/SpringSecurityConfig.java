@@ -3,10 +3,12 @@ package com.yunho.personalsecuritynoteservices.config;
 import com.yunho.personalsecuritynoteservices.user.User;
 import com.yunho.personalsecuritynoteservices.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -34,7 +36,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // permit
         http.authorizeRequests()
-                .antMatchers("/", "/css/**", "/home","/signup").permitAll()
+                .antMatchers("/", "/home","/signup").permitAll()
                 // hello 페이지는 USER 롤을 가진 유저에게만 허용
                 .antMatchers("/note").hasRole("USER")
                 .antMatchers("/admin").hasRole("ADMIN")
@@ -50,6 +52,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/");
+    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        // 정적 리소스 spring security 대상에서 제외
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Bean

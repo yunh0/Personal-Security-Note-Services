@@ -12,20 +12,24 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @RequiredArgsConstructor
 @Profile(value = "!test")
-public class InitializeConfig {
+public class InitializeDefaultConfig {
 
     private final UserService userService;
     private final NoteService noteService;
     private final NoticeService noticeService;
 
     @Bean
-    public void adminAccount() {
+    public void initializeDefaultUser() {
         User user = userService.signup("user", "user");
-        userService.signupAdmin("admin", "admin");
         noteService.saveNote(user, "테스트", "테스트입니다.");
         noteService.saveNote(user, "테스트2", "테스트2입니다.");
         noteService.saveNote(user, "테스트3", "테스트3입니다.");
         noteService.saveNote(user, "여름 여행계획", "여름 여행계획 작성중...");
+    }
+
+    @Bean
+    public void initializeDefaultAdmin() {
+        userService.signupAdmin("admin", "admin");
         noticeService.saveNotice("환영합니다.", "환영합니다 여러분");
         noticeService.saveNotice("노트 작성 방법 공지", "1. 회원가입\n2. 로그인\n3. 노트 작성\n4. 저장\n* 본인 외에는 게시글을 볼 수 없습니다.");
     }

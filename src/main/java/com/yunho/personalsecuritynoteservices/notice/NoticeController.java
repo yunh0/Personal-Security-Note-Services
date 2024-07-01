@@ -2,7 +2,7 @@ package com.yunho.personalsecuritynoteservices.notice;
 
 import java.util.List;
 
-import com.yunho.personalsecuritynoteservices.post.PostDto;
+import com.yunho.personalsecuritynoteservices.post.PostRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +28,8 @@ public class NoticeController {
     }
 
     @PostMapping
-    public String postNotice(@ModelAttribute PostDto postDto) {
-        noticeService.saveNotice(postDto.getTitle(), postDto.getContent());
+    public String postNotice(@ModelAttribute PostRegisterDto postRegisterDto) {
+        noticeService.saveNotice(postRegisterDto.getTitle(), postRegisterDto.getContent());
         return "redirect:notice";
     }
 

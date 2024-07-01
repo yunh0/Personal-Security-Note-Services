@@ -1,6 +1,5 @@
 package com.yunho.personalsecuritynoteservices.post;
 
-import java.security.Principal;
 import java.util.List;
 
 import com.yunho.personalsecuritynoteservices.user.User;
@@ -31,9 +30,9 @@ public class PostController {
     }
 
     @PostMapping
-    public String savePost(Authentication authentication, @ModelAttribute PostDto postDto) {
+    public String savePost(Authentication authentication, @ModelAttribute PostRegisterDto postRegisterDto) {
         User user = (User) authentication.getPrincipal();
-        postService.savePost(user, postDto.getTitle(), postDto.getContent());
+        postService.savePost(user, postRegisterDto.getTitle(), postRegisterDto.getContent());
         return "redirect:post";
     }
 

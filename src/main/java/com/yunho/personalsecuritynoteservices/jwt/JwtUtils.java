@@ -23,7 +23,6 @@ public class JwtUtils {
 
     public static String createToken(User user) {
         Claims claims = Jwts.claims().setSubject(user.getUsername());
-        claims.put("roles", user.getAuthorities());
         Date now = new Date(); // 현재 시간
         Pair<String, String> key = JwtKey.getRandomKey();
 

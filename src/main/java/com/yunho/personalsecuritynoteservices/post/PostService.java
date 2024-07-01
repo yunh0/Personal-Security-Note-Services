@@ -6,6 +6,7 @@ import com.yunho.personalsecuritynoteservices.user.User;
 import com.yunho.personalsecuritynoteservices.user.UserNotFoundException;
 import com.yunho.personalsecuritynoteservices.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +23,9 @@ public class PostService {
             throw new UserNotFoundException();
         }
         if (user.isAdmin()) {
-            return postRepository.findByStatusOrderByIdDesc(PostStatus.Y);
+            return postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         }
-        return postRepository.findByUserAndStatusOrderByIdDesc(user, PostStatus.Y);
+        return postRepository.findByUserOrderByIdDesc(user);
     }
 
     public Post savePost(User user, String title, String content) {

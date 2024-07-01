@@ -34,9 +34,6 @@ public class Notice {
     @Lob
     private String content;
 
-    @Enumerated(EnumType.STRING)
-    private PostStatus status;
-
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -48,6 +45,5 @@ public class Notice {
     ) {
         this.title = title;
         this.content = content;
-        this.status = PostStatus.Y;
     }
 }

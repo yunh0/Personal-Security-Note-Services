@@ -7,6 +7,13 @@
 * 관리자는 관리 차원에서 사용자들의 노트 제목 리스트를 볼 수 있지만 내용을 볼 수 없음
 * 관리자는 공지사항을 작성할 수 있고 일반 사용자들은 이 공지사항을 볼 수 있음
 
+## Branch
+main branch
+* Spring Security 단독
+
+JWT branch
+* Spring Security + JWT
+
 ## 개발 환경
 
 * Intellij IDEA Ultimate

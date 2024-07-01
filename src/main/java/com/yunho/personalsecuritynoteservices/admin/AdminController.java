@@ -1,5 +1,7 @@
-package com.yunho.personalsecuritynoteservices.note;
+package com.yunho.personalsecuritynoteservices.admin;
 
+import com.yunho.personalsecuritynoteservices.note.Note;
+import com.yunho.personalsecuritynoteservices.note.NoteService;
 import com.yunho.personalsecuritynoteservices.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

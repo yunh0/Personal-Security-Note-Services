@@ -1,4 +1,4 @@
-package com.yunho.personalsecuritynoteservices.post;
+package com.yunho.personalsecuritynoteservices.note;
 
 import com.yunho.personalsecuritynoteservices.user.User;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +15,13 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final PostService postService;
+    private final NoteService noteService;
 
     @GetMapping
-    public String getPostForAdmin(Authentication authentication, Model model) {
+    public String getNoteForAdmin(Authentication authentication, Model model) {
         User user = (User) authentication.getPrincipal();
-        List<Post> posts = postService.findByUser(user);
-        model.addAttribute("posts", posts);
+        List<Note> notes = noteService.findByUser(user);
+        model.addAttribute("notes", notes);
         return "admin/index";
     }
 }

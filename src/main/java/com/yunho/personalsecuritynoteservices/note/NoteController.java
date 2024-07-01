@@ -1,4 +1,4 @@
-package com.yunho.personalsecuritynoteservices.post;
+package com.yunho.personalsecuritynoteservices.note;
 
 import java.util.List;
 
@@ -16,30 +16,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/post")
-public class PostController {
+@RequestMapping("/note")
+public class NoteController {
 
-    private final PostService postService;
+    private final NoteService noteService;
 
     @GetMapping
-    public String getPost(Authentication authentication, Model model) {
+    public String getNote(Authentication authentication, Model model) {
         User user = (User) authentication.getPrincipal();
-        List<Post> posts = postService.findByUser(user);
-        model.addAttribute("posts", posts);
-        return "post/index";
+        List<Note> notes = noteService.findByUser(user);
+        model.addAttribute("notes", notes);
+        return "note/index";
     }
 
     @PostMapping
-    public String savePost(Authentication authentication, @ModelAttribute PostRegisterDto postRegisterDto) {
+    public String saveNote(Authentication authentication, @ModelAttribute NoteRegisterDto noteRegisterDto) {
         User user = (User) authentication.getPrincipal();
-        postService.savePost(user, postRegisterDto.getTitle(), postRegisterDto.getContent());
-        return "redirect:post";
+        noteService.saveNote(user, noteRegisterDto.getTitle(), noteRegisterDto.getContent());
+        return "redirect:note";
     }
 
     @DeleteMapping
-    public String deletePost(Authentication authentication, @RequestParam Long id) {
+    public String deleteNote(Authentication authentication, @RequestParam Long id) {
         User user = (User) authentication.getPrincipal();
-        postService.deletePost(user, id);
-        return "redirect:post";
+        noteService.deleteNote(user, id);
+        return "redirect:note";
     }
 }

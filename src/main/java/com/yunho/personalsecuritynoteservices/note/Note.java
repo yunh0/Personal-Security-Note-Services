@@ -1,4 +1,4 @@
-package com.yunho.personalsecuritynoteservices.post;
+package com.yunho.personalsecuritynoteservices.note;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Post {
+public class Note {
 
     @Id
     @GeneratedValue
@@ -45,7 +45,7 @@ public class Post {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public Post(
+    public Note(
             String title,
             String content,
             User user

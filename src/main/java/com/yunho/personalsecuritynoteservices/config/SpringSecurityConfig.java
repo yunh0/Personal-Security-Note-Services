@@ -34,7 +34,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // permit
         http.authorizeRequests()
-                .antMatchers("/", "/css/**", "/home", "/example", "/signup").permitAll()
+                .antMatchers("/", "/css/**", "/home","/signup").permitAll()
                 // hello 페이지는 USER 롤을 가진 유저에게만 허용
                 .antMatchers("/note").hasRole("USER")
                 .antMatchers("/admin").hasRole("ADMIN")

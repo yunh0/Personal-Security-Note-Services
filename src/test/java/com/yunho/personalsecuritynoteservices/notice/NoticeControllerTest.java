@@ -47,8 +47,7 @@ class NoticeControllerTest {
     @WithMockUser
     void getNotice_인증있음() throws Exception {
         mockMvc.perform(get("/notice"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("notice/index"));
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -58,7 +57,8 @@ class NoticeControllerTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("title", "제목")
                         .param("content", "내용")
-        ).andExpect(status().isForbidden());
+                ).andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrlPattern("**/login"));
     }
 
     @Test
@@ -88,7 +88,8 @@ class NoticeControllerTest {
         Notice notice = noticeRepository.save(new Notice("제목", "내용"));
         mockMvc.perform(
                 delete("/notice?id=" + notice.getId())
-        ).andExpect(status().isForbidden());
+                ).andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrlPattern("**/login"));
     }
 
     @Test

@@ -15,15 +15,15 @@ public class SignUpController {
     private final UserService userService;
 
     @GetMapping
-    public String signupView() {
+    public String signup() {
         return "signup";
     }
 
     @PostMapping
     public String signup(
-            @ModelAttribute UserDto userDto
+            @ModelAttribute UserRegisterDto userRegisterDto
     ) {
-        userService.signup(userDto.getUsername(), userDto.getPassword());
+        userService.signup(userRegisterDto.getUsername(), userRegisterDto.getPassword());
         return "redirect:login";
     }
 }

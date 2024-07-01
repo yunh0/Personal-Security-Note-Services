@@ -7,11 +7,11 @@ import com.yunho.personalsecuritynoteservices.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 @RequiredArgsConstructor
+@Profile(value = "!test")
 public class InitializeConfig {
 
     private final UserService userService;
@@ -19,7 +19,6 @@ public class InitializeConfig {
     private final NoticeService noticeService;
 
     @Bean
-    @PostConstruct
     public void adminAccount() {
         User user = userService.signup("user", "user");
         userService.signupAdmin("admin", "admin");
